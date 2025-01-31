@@ -1,6 +1,6 @@
 
 /*
- * *** PLACE YOUR NAME / SECTION  HERE ***
+ * *** NAME: Fareen Samad   SECTION: Comp 272-001 ***
  *
  * Homework # 1 (Programming Assignment). This Java class defines some basic
  * manipulation operations on Linked-Lists and Stacks.
@@ -15,7 +15,7 @@ import java.util.Stack;
 
 public class HW1 {
 
-    /*
+    /* 
      * Class LinkedList
      *
      * This class builds a singly linked list. Each node of the linked-list
@@ -48,7 +48,7 @@ public class HW1 {
 
         /*
          * Method sortedInsert() - this method will insert a new node to the
-         * linked list containing the value specific in teh parameter 'data'.
+         * linked list containing the value specific in the parameter 'data'.
          * The newly inserted node will be inserted in sorted order within
          * the linked-list.
          *
@@ -83,14 +83,31 @@ public class HW1 {
          * value that is less than the provided parameter 'ltValue'.
          *
          * The method will invoke the method removeElements for each element
-         * found in the linked-list that is less than thr parameter value passed.
+         * found in the linked-list that is less than the parameter value passed.
+         */
+        /**
+         * @param ltValue
          */
         public void removeElementsLT ( int ltValue ) {
 
-            // YOUR CODE GOES HERE
+            // while loop to remove head node if it is less than the value
+            while (this.head != null && this.head.data < ltValue) { 
+                this.head = this.head.next; // remove head node
+            } // end while
 
-            return;
-        }
+            Node current = this.head; // set to head, first node
+
+            // while loop to remove nodes that are less than the value
+            while (current != null && current.next != null) {
+                if (current.next.data < ltValue) {
+                    current.next = current.next.next; // remove node
+                } else {
+                    current = current.next; // move to next node
+                }
+            } // end while
+            
+            return; 
+        } // end removeElementsLT
 
 
         /*
@@ -100,10 +117,24 @@ public class HW1 {
 
         public void removeElement ( int value ) {
 
-            // YOUR CODE GOES HERE
+            // while loop to initiate removal of head if it is equal to the value
+            while (this.head != null && this.head.data == value) {
+                this.head = this.head.next; // removal of head node
+            } // end while
+
+            Node current = this.head; // set to head, first node
+
+            // while loop to remove nodes that are equal to the value
+            while (current != null && current.next != null) {
+                if (current.next.data == value) {
+                    current.next = current.next.next; // remove node
+                } else {
+                    current = current.next; // move to next node
+                }
+            } // end while
 
             return;
-        }
+        } // end removeElement method
 
 
         /*
@@ -122,8 +153,6 @@ public class HW1 {
         }
 
     } // End class LinkedList
-
-
 
 
     /*
@@ -158,18 +187,29 @@ public class HW1 {
         public static boolean isPalindrome(String input) {
 
             Stack<Character> stack = new Stack<>();
-            input = input.toLowerCase().replaceAll("\\s+", "");
+            input = input.toLowerCase().replaceAll("\\s+", ""); 
 
-            // Your CODE GOES HERE
-            return false;
-        }
+            // use push to add characters to the stack
+            for (int i = 0; i < input.length(); i++) {
+                stack.push(input.charAt(i));
+            }
+
+            // use pop to remove characters from the stack
+            for (int i = 0; i < input.length(); i++) {
+                if (stack.pop() != input.charAt(i)) {
+
+                    return false; // false if characters do not match
+                }
+            }
+            return true; // true if it matches and is a palindrome
+        } // end isPalindrome method
 
 
         /*
          * Method findLargestk() - This method will return the largest index
          * position in the stack for the value specified by the parameter 'k'.
          *
-         * Note that the bottom of the stack is index location 0. So it you push
+         * Note that the bottom of the stack is index location 0. So if you push
          * on to the stack the values 3 4 9 4 4 7 4, in that order. And you pass the
          * value '4' for the parameter k, then the largest index position is index
          * location 6.
@@ -178,16 +218,35 @@ public class HW1 {
          * destroy the passed in stack, meaning when the method returns, the passed in
          * stack should be identical to when this method is passed. One trick as you
          * pop elements off the passed in stack, place them in a temp stack. Then when
-         * completed, place them all back in teh original stack.
+         * completed, place them all back in the original stack.
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
 
-            // YOUR CODE GOES HERE
-            return -1;
-        }
+            Stack<Integer> tempStack = new Stack<>(); // create temp stack
+            int answer = stack.size() - 1; // answer set to last index
+
+            // while loop for largest index of k
+            while (!stack.empty()) {
+                int val = stack.pop(); // remove top position
+                tempStack.push(val); // add to temp 
+
+                // if statement, check if value is equal to k
+                if(val == k) {
+                    while (!tempStack.empty()) {
+                        int tempVal = tempStack.pop(); // remove top position
+                        stack.push(tempVal); // add to stack
+                    }
+                    return answer; // return answer
+                } else {
+                    answer--; // decrement answer
+                }
+
+            } // end while
+
+            return -1; // return -1 if k is not found
+        } // end findLargestK method
 
     }  // End class Stacks
-
 
 
     /*******************************
@@ -219,7 +278,7 @@ public class HW1 {
         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3; // O(N + M) time, O(1) space
     }
 
 
@@ -240,7 +299,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2; // O(N log N) time complexity
     }
 
 }
